@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace harmic.Models;
 
-public partial class Harmic1Context : DbContext
+public partial class HarmicContext : DbContext
 {
-    public Harmic1Context()
+    public HarmicContext()
     {
     }
 
-    public Harmic1Context(DbContextOptions<Harmic1Context> options)
+    public HarmicContext(DbContextOptions<HarmicContext> options)
         : base(options)
     {
     }
@@ -45,7 +45,10 @@ public partial class Harmic1Context : DbContext
 
     public virtual DbSet<TbRole> TbRoles { get; set; }
 
-  
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("data source= DESKTOP-08L2AHS; initial catalog=Harmic; integrated security=True; TrustServerCertificate=True;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TbAccount>(entity =>
@@ -62,6 +65,10 @@ public partial class Harmic1Context : DbContext
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.Phone).HasMaxLength(50);
             entity.Property(e => e.Username).HasMaxLength(50);
+
+            entity.HasOne(d => d.Role).WithMany(p => p.TbAccounts)
+                .HasForeignKey(d => d.RoleId)
+                .HasConstraintName("FK_tb_Account_tb_Role");
         });
 
         modelBuilder.Entity<TbBlog>(entity =>
@@ -158,15 +165,14 @@ public partial class Harmic1Context : DbContext
 
         modelBuilder.Entity<TbMenu>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("tb_Menu");
+            entity.HasKey(e => e.MenuId);
+
+            entity.ToTable("tb_Menu");
 
             entity.Property(e => e.Alias).HasMaxLength(150);
             entity.Property(e => e.CreatedBy).HasMaxLength(150);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(500);
-            entity.Property(e => e.MenuId).ValueGeneratedOnAdd();
             entity.Property(e => e.ModifiedBy).HasMaxLength(150);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.Title).HasMaxLength(150);
@@ -211,6 +217,10 @@ public partial class Harmic1Context : DbContext
             entity.Property(e => e.ModifiedBy).HasMaxLength(150);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.Phone).HasMaxLength(15);
+
+            entity.HasOne(d => d.OrderStatus).WithMany(p => p.TbOrders)
+                .HasForeignKey(d => d.OrderStatusId)
+                .HasConstraintName("FK_tb_Order_tb_OrderStatus");
         });
 
         modelBuilder.Entity<TbOrderDetail>(entity =>
@@ -224,10 +234,6 @@ public partial class Harmic1Context : DbContext
             entity.HasOne(d => d.Order).WithMany(p => p.TbOrderDetails)
                 .HasForeignKey(d => d.OrderId)
                 .HasConstraintName("FK_tb_OrderDetail_tb_Order");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.TbOrderDetails)
-                .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK_tb_OrderDetail_tb_Product");
         });
 
         modelBuilder.Entity<TbOrderStatus>(entity =>

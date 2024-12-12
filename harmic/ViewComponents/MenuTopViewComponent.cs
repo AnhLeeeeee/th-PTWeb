@@ -5,10 +5,10 @@ namespace harmic.ViewComponents
 {
     public class MenuTopViewComponent : ViewComponent
     {
-        private readonly Harmic1Context _context;
+        private readonly HarmicContext _context;
 
 
-        public MenuTopViewComponent(Harmic1Context context)
+        public MenuTopViewComponent(HarmicContext context)
         {
             _context = context;
         }

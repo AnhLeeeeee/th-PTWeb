@@ -6,10 +6,10 @@ namespace harmic.Controllers
 {
     public class HomeController : Controller
     {   
-        private readonly Harmic1Context _context;
+        private readonly HarmicContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(Harmic1Context context,ILogger<HomeController> logger)
+        public HomeController(HarmicContext context,ILogger<HomeController> logger)
         {
             _context = context;
             _logger = logger;

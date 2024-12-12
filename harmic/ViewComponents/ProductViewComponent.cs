@@ -7,10 +7,10 @@ namespace harmic.ViewComponents
 {
     public class ProductViewComponent : ViewComponent
     {
-        private readonly Harmic1Context _context;
+        private readonly HarmicContext _context;
 
 
-        public ProductViewComponent(Harmic1Context context) {
+        public ProductViewComponent(HarmicContext context) {
 
             _context = context;
         }

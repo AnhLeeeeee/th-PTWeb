@@ -10,4 +10,6 @@ public partial class TbRole
     public string? RoleName { get; set; }
 
     public string? Description { get; set; }
+
+    public virtual ICollection<TbAccount> TbAccounts { get; set; } = new List<TbAccount>();
 }

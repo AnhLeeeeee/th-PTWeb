@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="~/admin/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="~/admin/plugins/summernote/summernote-bs4.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -865,6 +866,7 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
+    @RenderSection("Scripts", required: false)
     <script src="~/admin/plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="~/admin/plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -898,5 +900,6 @@
     <script src="~/admin/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/admin/dist/js/pages/dashboard.js"></script>
+    
 </body>
 </html>

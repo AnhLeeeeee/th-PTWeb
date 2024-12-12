@@ -45,7 +45,5 @@ public partial class TbProduct
 
     public virtual TbProductCategory? CategoryProduct { get; set; }
 
-    public virtual ICollection<TbOrderDetail> TbOrderDetails { get; set; } = new List<TbOrderDetail>();
-
     public virtual ICollection<TbProductReview> TbProductReviews { get; set; } = new List<TbProductReview>();
 }
